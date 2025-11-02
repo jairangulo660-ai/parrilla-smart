@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parrilla Inteligente</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                  url('https://images.unsplash.com/photo-1555992336-cbfed6b88b58') no-repeat center center/cover;
+      color: #fff;
+      text-align: center;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    header img {
+      height: 60px;
+      border-radius: 50%;
+    }
+
+    header h1 {
+      font-size: 2.2em;
+      color: #ffcc00;
+      margin: 0;
+      text-shadow: 2px 2px 10px #000;
+    }
+
+    #conexion {
+      margin: 20px;
+      padding: 10px 25px;
+      font-size: 1.1em;
+      border: none;
+      background-color: #2196F3;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #conexion:hover {
+      background-color: #0b7dda;
+      transform: scale(1.05);
+    }
+
+    .principal {
+      margin-top: 40px;
+    }
+
+    .grupo-encendido {
+      margin-bottom: 40px;
+    }
+
+    .botones {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    .encender { background-color: #ff9800; color: #fff; }
+    .apagar   { background-color: #f44336; color: #fff; }
+    .calentar { background-color: #e65100; color: #fff; }
+    .enfriar  { background-color: #00bcd4; color: #fff; }
+
+    button:hover {
+      opacity: 0.85;
+      transform: scale(1.08);
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 15px;
+      font-size: 0.9em;
+      color: #ddd;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="https://cdn-icons-png.flaticon.com/512/861/861512.png" alt="Logo Parrilla">
+    <h1>🔥 Parrilla Inteligente Wi-Fi 🔥</h1>
+  </header>
+
+  <p>Controla tu parrilla desde aquí — ajusta la temperatura a tu gusto.</p>
+
+  <button id="conexion">Conectar con la Parrilla</button>
+
+  <div class="principal">
+    <div class="grupo-encendido">
+      <button class="encender" onclick="enviar('ENCENDER')">Encender Parrilla</button>
+      <button class="apagar" onclick="enviar('APAGAR')">Apagar Parrilla</button>
+    </div>
+
+    <div class="botones">
+      <button class="calentar" onclick="enviar('CALENTAR')">Calentar</button>
+      <button class="enfriar" onclick="enviar('ENFRIAR')">Enfriar</button>
+    </div>
+  </div>
+
+  <footer>
+    Proyecto de Grado — Control Automático de Parrilla © 2025  
+    <br>Desarrollado por Jesús y equipo 🔧
+  </footer>
+
+  <script>
+    let dispositivo;
+
+    async function conectar() {
+      try {
+        dispositivo = await navigator.bluetooth.requestDevice({
+          acceptAllDevices: true
+        });
+        alert("✅ Parrilla conectada con éxito");
+      } catch (error) {
+        alert("❌ Error al conectar: " + error);
+      }
+    }
+
+    async function enviar(comando) {
+      if (!dispositivo) {
+        alert("⚠️ Primero conecta la parrilla con el botón 'Conectar'");
+        return;
+      }
+      console.log("Comando enviado:", comando);
+      // Aquí se enviará la orden al ESP32 (por WiFi o Bluetooth)
+    }
+
+    document.getElementById("conexion").addEventListener("click", conectar);
+  </script>
+
+</body>
+</html>
+
